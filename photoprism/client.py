@@ -70,6 +70,15 @@ class Client:
     def get_photo(self, uid):
         return self._get('/photos/' + uid)
 
+    def add_label_to_photo(self, photo_uid, label_name, label_priority=10):
+        return self._post(
+            f'/photos/{photo_uid}/label',
+            data={
+                'Name': label_name,
+                'Priority': label_priority
+            }
+        )
+
     @_inspect_response
     def _get(self, url_path, params=None):
         return self.session.get(self.base_url + url_path, params=params)
@@ -78,13 +87,6 @@ class Client:
     def _post(self, url_path, data=None):
         return self.session.post(
             self.base_url + url_path,
-            data=json.dumps(data)
-        )
-
-    @_inspect_response
-    def _patch(self, url_path, data):
-        return self.session.patch(
-            url=self.base_url + url_path,
             data=json.dumps(data)
         )
 
