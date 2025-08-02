@@ -22,7 +22,6 @@ class Client:
     API doc:
     https://pkg.go.dev/github.com/photoprism/photoprism/internal/api
     """
-    token_file = 'token.txt'
     default_domain = 'https://demo.photoprism.org'
     default_root = '/api/v1'
 
@@ -76,6 +75,16 @@ class Client:
             data={
                 'Name': label_name,
                 'Priority': label_priority
+            }
+        )
+
+    def import_(self, path='/', move=True, dest=''):
+        return self._post(
+            '/import/',
+            data={
+                'path': path,
+                'move': move,
+                dest: dest
             }
         )
 
